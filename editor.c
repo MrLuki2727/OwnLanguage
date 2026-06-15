@@ -26,7 +26,7 @@ void draw_editor_ambient(int offset)
 {
     setCursorType(C_INVISABLE);
     gotoxy(50, 0);
-    printf("OwnLanguage: CODING");
+    printf("OwnLanguage: CODING ");
     gotoxy(0, 1);
     printf("─────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
     gotoxy(0, 24);
@@ -47,7 +47,7 @@ void draw_editor_code(int offset)
 
     if (changes == 4)
     {
-        // alles neu zeichnen
+
         for (int i = 0; i < 23; i++)
         {
             gotoxy(0, i + 2);
@@ -61,7 +61,7 @@ void draw_editor_code(int offset)
         int x_cursor;
         getxy(&x_cursor, &y_cursor);
         gotoxy(0, y_cursor);
-        int nummer = y_cursor - 2 + 1 + offset; // Bildschirmzeile → Programm-Index
+        int nummer = y_cursor - 2 + 1 + offset;
         draw_code_with_synax(nummer);
     }
     else if (changes == 2 || changes == 3)
@@ -69,7 +69,7 @@ void draw_editor_code(int offset)
         int y_cursor;
         int x_cursor;
         getxy(&x_cursor, &y_cursor);
-        // aktuelle Zeile und alles darunter neu zeichnen
+
         for (int i = y_cursor; i <= 24; i++)
         {
             gotoxy(0, i);
@@ -90,7 +90,7 @@ void draw_editor_run()
 
     setCursorType(C_INVISABLE);
     gotoxy(50, 0);
-    printf("OwnLanguage: RUNNING");
+    printf("OwnLanguage: RUNNING ");
     gotoxy(0, 1);
     printf("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
     gotoxy(0, 24);
