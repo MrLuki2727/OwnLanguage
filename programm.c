@@ -6,7 +6,7 @@
 
 Zeile Programm[1000];
 extern int scroll_offset;
-bool changes = true;
+int changes = 4; // 0 = keine changes 1 = Neues Zeichen 2 = Neue Zeile 3 = Zeile löschen 4 = redraw all
 
 char FILENAME[128];
 

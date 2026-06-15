@@ -43,7 +43,8 @@ int main(void)
         else if (taste == 13) // Enter
         {
             zeile_einfuegen();
-            changes = true;
+            changes = 2;
+
         }
         else if (taste == 8) // Löschen
         {
@@ -51,12 +52,15 @@ int main(void)
             {
                 gotoxy(x_cursor - 1, y_cursor);
                 zeichen_loeschen();
-                changes = true;
+                changes = 1;
+
             }
             else
             {
                 zeile_loeschen();
-                changes = true;
+                changes = 3;
+
+
             }
         }
         else if (sondertaste && taste == 72) // Pfeil hoch
@@ -80,12 +84,13 @@ int main(void)
             clrscr();
             programm_ausfuehren();
             getch();
-            redraw_all = true;
+            changes = 4;
         }
-        else if (!sondertaste) // normales Zeichen, nur wenn KEINE Sondertaste
+        else if (!sondertaste)
         {
             zeichen_einfuegen((char)taste);
-            changes = true;
+            changes = 1;
+
         }
 
         getxy(&x_cursor, &y_cursor);

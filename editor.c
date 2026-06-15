@@ -6,28 +6,19 @@
 int scroll_offset = 0;
 int running_printed_lines = 0;
 int previous_scroll_offset = 0;
-bool redraw_all = true;
 int exit_code = 1;
 
-void draw_editor(int offset)
+void draw_editor(int offset) // 0 = keine changes 1 = Neues Zeichen 2 = Neue Zeile 3 = Zeile löschen 4 = redraw all
 {
     setCursorType(C_INVISABLE);
-    if (redraw_all == true)
-    {
-        clrscr();
-        draw_editor_ambient(offset);
-        draw_editor_code(offset);
-        redraw_all = false;
-    }
-    else if (scroll_offset != previous_scroll_offset)
+    if (changes == 4)
     {
         draw_editor_ambient(offset);
         draw_editor_code(offset);
     }
-    else if (changes == true)
+    else
     {
         draw_editor_code(offset);
-        changes = false;
     }
 }
 
@@ -38,12 +29,8 @@ void draw_editor_ambient(int offset)
     printf("OwnLanguage: CODING");
     gotoxy(0, 1);
     printf("─────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
-    for (int i = 0; i < 23; i++)
-    {
-        printf(" %3d │\n", i + offset + 1);
-    }
-    gotoxy(0, 29);
-    printf("─────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
+    gotoxy(0, 24);
+    printf("\n─────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────\n");
     if (exit_code == 0)
     {
         printf("RUN SUCESSFUL");
@@ -57,11 +44,45 @@ void draw_editor_ambient(int offset)
 void draw_editor_code(int offset)
 {
     setCursorType(C_INVISABLE);
-    for (int i = 0; i < 23; i++)
+
+    if (changes == 4)
     {
-        gotoxy(7, 2 + i);
-        printf("%-110s", Programm[i + offset].text);
+        // alles neu zeichnen
+        for (int i = 0; i < 23; i++)
+        {
+            gotoxy(0, i + 2);
+            draw_code_with_synax(i + 1 + offset);
+        }
+
     }
+    else if (changes == 1)
+    {
+       int y_cursor;
+        int x_cursor;
+        getxy(&x_cursor, &y_cursor);
+        gotoxy(0, y_cursor);
+        int nummer = y_cursor - 2 + 1 + offset; // Bildschirmzeile → Programm-Index
+        draw_code_with_synax(nummer);
+    }
+    else if (changes == 2 || changes == 3)
+    {
+        int y_cursor;
+        int x_cursor;
+        getxy(&x_cursor, &y_cursor);
+        // aktuelle Zeile und alles darunter neu zeichnen
+        for (int i = y_cursor; i <= 24; i++)
+        {
+            gotoxy(0, i);
+            int nummer = i - 2 + 1 + offset;
+            draw_code_with_synax(nummer);
+        }
+    }
+    changes = 0;
+}
+
+void draw_code_with_synax(int number)
+{
+    printf(" %3d │ %-110s", number, Programm[number-1].text);
 }
 
 void draw_editor_run()
@@ -143,7 +164,7 @@ void draw_editor_menu()
         }
         else if (taste == 27)
         {
-            redraw_all = true;
+            changes = 4;
             return;
         }
         else if (taste == 13)

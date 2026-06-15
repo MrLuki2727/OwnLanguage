@@ -6,7 +6,6 @@
 extern int scroll_offset;
 extern int running_printed_lines;
 extern int previouse_scroll_offset;
-extern bool redraw_all;
 extern int exit_code;
 
 void draw_editor(int offset);
@@ -24,4 +23,6 @@ void print_in_console(int n);
 int input_in_console();
 
 void change_filename();
+
+void draw_code_with_synax(int number);
 #endif //OWNLANGUAGE_EDITOR_H
