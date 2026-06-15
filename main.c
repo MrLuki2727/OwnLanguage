@@ -5,10 +5,11 @@
 #include "run.h"
 #include <stdio.h>
 
-#define FILENAME "Code.lu"
+#define FILENAME_dev "Code.lu"
 
 int main(void)
 {
+    strcpy(FILENAME, FILENAME_dev);
     initConsole();
     setCursorType(C_SMALL);
     SetConsoleOutputCP(CP_UTF8);

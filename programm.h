@@ -7,6 +7,7 @@ typedef struct {
 
 extern Zeile Programm[1000]; // 1000 Zeilen max
 extern bool changes;
+extern char FILENAME[128];
 
 void programm_laden(char* dateiname);// Lädt das file und teilt in zeilennummer und code auf
 

@@ -60,7 +60,6 @@ void draw_editor_code(int offset)
     for (int i = 0; i < 23; i++)
     {
         gotoxy(7, 2 + i);
-        //printf("%s\n", Programm[i + offset].text);
         printf("%-110s", Programm[i + offset].text);
     }
 }
@@ -99,6 +98,71 @@ void draw_editor_menu()
     gotoxy(50, 14);
     printf("────────────────────────\n");
 
+    int pos = 0;
+    while (1)
+    {
+        gotoxy(53,11+pos);
+        printf("[]");
+        gotoxy(69,11+pos);
+        printf("[]");
+        if (pos == 0)
+        {
+            gotoxy(53,12);
+            printf("  ");
+            gotoxy(69,12);
+            printf("  ");
+        }
+        else if (pos == 1)
+        {
+            gotoxy(53,11);
+            printf("  ");
+            gotoxy(69,11);
+            printf("  ");
+            gotoxy(53,13);
+            printf("  ");
+            gotoxy(69,13);
+            printf("  ");
+        }
+        else if (pos == 2)
+        {
+            gotoxy(53,12);
+            printf("  ");
+            gotoxy(69,12);
+            printf("  ");
+        }
+        int taste = getch();
+
+        if (taste == 72)//Hoch
+        {
+            if (pos > 0) pos --;
+
+        }
+        else if (taste == 80)//Runter
+        {
+            if (pos < 2) pos ++;
+        }
+        else if (taste == 27)
+        {
+            redraw_all = true;
+            return;
+        }
+        else if (taste == 13)
+        {
+            switch (pos)
+            {
+                case 0:
+                    programm_speichern(FILENAME);
+                    break;
+                case 1:
+                change_filename();
+                    break;
+                case 2:
+                    exit(0);
+                    break;
+                default:
+            }
+        }
+    }
 }
 
 void print_in_console(int n)
@@ -117,4 +181,37 @@ int input_in_console()
     scanf("%d", &n);
     running_printed_lines ++;
     return n;
+}
+void change_filename()
+{
+    setCursorType(C_INVISABLE);
+    gotoxy(50, 10);
+    printf("────CHANGE FILENAME─────\n");
+    gotoxy(50, 11);
+    printf("                        \n");
+    gotoxy(50, 12);
+    printf("                        \n");
+    gotoxy(50, 13);
+    printf("                        \n");
+    gotoxy(50, 14);
+    printf("────────────────────────\n");
+    gotoxy(55, 12);
+    printf("ENTER:");
+    setCursorType(C_SMALL);
+    char filename[100];
+    scanf("%s", filename);
+
+    if (strstr(filename,".lu") == NULL) {change_filename();}
+    setCursorType(C_INVISABLE);
+    strcpy(FILENAME, filename);
+    gotoxy(50, 10);
+    printf("──────────MENÜ──────────\n");
+    gotoxy(50, 11);
+    printf("     ─────SAVE─────     \n");
+    gotoxy(50, 12);
+    printf("     ─────EDIT─────     \n");
+    gotoxy(50, 13);
+    printf("     ─────EXIT─────     \n");
+    gotoxy(50, 14);
+    printf("────────────────────────\n");
 }

@@ -64,7 +64,7 @@ int zeile_ausfuehren(char *text)
         leerzeichen_ueberspringen(&s);
         if (ergebnis)
         {
-            return zeile_ausfuehren(s); // einfach den Rest rekursiv ausführen
+            return zeile_ausfuehren(s);
         }
         return -1;
     }
@@ -89,7 +89,7 @@ int zeile_ausfuehren(char *text)
         return -1;
     }
 
-    return -1; // unbekannter Befehl, ignorieren
+    return -1;
 }
 
 int programm_ausfuehren(void)

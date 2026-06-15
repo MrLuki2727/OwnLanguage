@@ -8,6 +8,8 @@ Zeile Programm[1000];
 extern int scroll_offset;
 bool changes = true;
 
+char FILENAME[128];
+
 void programm_laden(char *dateiname)
 {
     int i = 0;

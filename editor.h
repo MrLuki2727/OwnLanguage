@@ -22,4 +22,6 @@ void draw_editor_menu();
 void print_in_console(int n);
 
 int input_in_console();
+
+void change_filename();
 #endif //OWNLANGUAGE_EDITOR_H
