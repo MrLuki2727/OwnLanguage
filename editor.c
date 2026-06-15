@@ -2,11 +2,27 @@
 #include "console.h"
 #include <stdio.h>
 #include "programm.h"
+#include "console.h"
+
+
+#define FARBE_KEYWORD 4
+#define FARBE_VARIABLE 2
+#define FARBE_ZAHL 14
+#define FARBE_OPERATOR 1
+#define FARBE_KLAMMER 6
+#define FARBE_RESET 15
 
 int scroll_offset = 0;
 int running_printed_lines = 0;
 int previous_scroll_offset = 0;
 int exit_code = 1;
+
+
+static void leerzeichen_ueberspringen(char **s)
+{
+    while (**s == ' ') (*s)++;
+}
+
 
 void draw_editor(int offset) // 0 = keine changes 1 = Neues Zeichen 2 = Neue Zeile 3 = Zeile löschen 4 = redraw all
 {
@@ -82,8 +98,91 @@ void draw_editor_code(int offset)
 
 void draw_code_with_synax(int number)
 {
-    printf(" %3d │ %-110s", number, Programm[number-1].text);
+    printf(" %3d │ ", number);
+
+    char *s = Programm[number - 1].text;
+    while (*s != '\0')
+    {
+
+        if (*s == ' ')
+        {
+            putchar(' ');
+            s++;
+        }
+        else if (*s == '(' || *s == ')')
+        {
+            textcolor(FARBE_KLAMMER);
+            printf("%c", *s);
+            textcolor(FARBE_RESET);
+            s++;
+        }
+        else if (*s == '+' || *s == '-' || *s == '*' || *s == '/' || *s == '=' || *s == '>' || *s == '<' || *s == '!')
+        {
+            textcolor(FARBE_OPERATOR);
+            printf("%c", *s);
+            textcolor(FARBE_RESET);
+            s++;
+        }
+        else if (isdigit((unsigned char) *s))
+        {
+            textcolor(FARBE_ZAHL);
+            putchar(*s);
+            textcolor(FARBE_RESET);
+            s++;
+        }
+        else if (isalpha((unsigned char) *s))
+        {
+            const char *keywords[] = {"LET", "PRINT", "GOTO", "IF", "ELSE", "WHILE", "ENDWHILE", "INPUT", "END", NULL};
+            int gefunden = 0;
+
+            for (int i = 0; keywords[i] != NULL; i++)
+            {
+                int len = strlen(keywords[i]);
+                if (strncmp(s, keywords[i], len) == 0 && !isalpha((unsigned char)s[len]))
+                {
+                    textcolor(FARBE_KEYWORD);
+                    for (int j = 0; j < len; j++) putchar(s[j]);
+                    textcolor(FARBE_RESET);
+                    s += len;
+                    gefunden = 1;
+                    break;
+                }
+            }
+
+            if (!gefunden && *s >= 'A' && *s <= 'Z')
+            {
+
+
+                    textcolor(FARBE_VARIABLE);
+                    putchar(*s);
+                    textcolor(FARBE_RESET);
+                    s++;
+
+            }
+            else
+            {
+                textcolor(FARBE_RESET);
+                putchar(*s); // alles andere einfach ausgeben
+                s++;
+            }
+        }
+        else
+        {
+            textcolor(FARBE_RESET);
+            putchar(*s); // alles andere einfach ausgeben
+            s++;
+        }
+    }
+
+    // Rest der Zeile mit Leerzeichen auffüllen (damit alte Zeichen überschrieben werden)
+    textcolor(FARBE_RESET);
+    printf("%-*s", 110 - (int)(s - Programm[number-1].text), "");
 }
+
+
+
+
+
 
 void draw_editor_run()
 {
