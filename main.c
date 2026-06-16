@@ -75,11 +75,21 @@ int main(void)
         }
         else if (sondertaste && taste == 72) // Pfeil hoch
         {
-            if (y_cursor > 2) y_cursor --;
+            if (scroll_offset > 0 && y_cursor == 2)
+            {
+                scroll_offset--;
+                changes = 4;
+            }
+            else if (y_cursor > 2) y_cursor --;
         }
         else if (sondertaste && taste == 80) // Pfeil runter
         {
             if (y_cursor < 24) y_cursor++;
+            else if (y_cursor == 24)
+            {
+                scroll_offset++;
+                changes = 4;
+            }
         }
         else if (sondertaste && taste == 75) // Pfeil links
         {
