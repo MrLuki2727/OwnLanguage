@@ -2,7 +2,6 @@
 #include "console.h"
 #include <stdio.h>
 #include "programm.h"
-#include "console.h"
 
 
 #define FARBE_KEYWORD 4
@@ -272,11 +271,15 @@ void draw_editor_menu()
             {
                 case 0:
                     programm_speichern(FILENAME);
+                    changes = 4;
                     break;
                 case 1:
                 change_filename();
+                changes = 4;
                     break;
                 case 2:
+
+                    programm_speichern(FILENAME);
                     exit(0);
                     break;
                 default:

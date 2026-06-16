@@ -23,4 +23,8 @@ void zeichen_loeschen();
 
 void init_Programm(void);
 
+void dateiname_laden();
+
+void dateiname_speichern();
+
 #endif //OWNLANGUAGE_PROGRAMM_H

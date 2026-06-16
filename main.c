@@ -5,11 +5,11 @@
 #include "run.h"
 #include <stdio.h>
 
-#define FILENAME_dev "Code.lu"
+
 
 int main(void)
 {
-    strcpy(FILENAME, FILENAME_dev);
+    dateiname_laden();
     initConsole();
     setCursorType(C_SMALL);
     SetConsoleOutputCP(CP_UTF8);
@@ -26,6 +26,7 @@ int main(void)
     while (1)
     {
         gotoxy(x_cursor, y_cursor);
+        getxy(&x_cursor, &y_cursor);
         setCursorType(C_SMALL);
         int taste = getch();
         int sondertaste = 0;
@@ -39,10 +40,12 @@ int main(void)
         if (taste == 27) // ESC
         {
             draw_editor_menu();
+            changes = 4;
         }
         else if (taste == 13) // Enter
         {
             zeile_einfuegen();
+            y_cursor++;
             changes = 2;
 
         }
@@ -52,12 +55,19 @@ int main(void)
             {
                 gotoxy(x_cursor - 1, y_cursor);
                 zeichen_loeschen();
+                x_cursor--;
                 changes = 1;
+
 
             }
             else
             {
                 zeile_loeschen();
+                if (y_cursor >2)
+                {
+                   y_cursor--;
+                }
+
                 changes = 3;
 
 
@@ -65,19 +75,19 @@ int main(void)
         }
         else if (sondertaste && taste == 72) // Pfeil hoch
         {
-            if (y_cursor > 2) gotoxy(x_cursor, y_cursor - 1);
+            if (y_cursor > 2) y_cursor --;
         }
         else if (sondertaste && taste == 80) // Pfeil runter
         {
-            if (y_cursor < 24) gotoxy(x_cursor, y_cursor + 1);
+            if (y_cursor < 24) y_cursor++;
         }
         else if (sondertaste && taste == 75) // Pfeil links
         {
-            if (x_cursor > 7) gotoxy(x_cursor - 1, y_cursor);
+            if (x_cursor > 7) x_cursor--;
         }
         else if (sondertaste && taste == 77) // Pfeil rechts
         {
-            gotoxy(x_cursor + 1, y_cursor);
+            x_cursor++;
         }
         else if (taste == 9) // Tab -> ausführen
         {
@@ -89,11 +99,12 @@ int main(void)
         else if (!sondertaste)
         {
             zeichen_einfuegen((char)taste);
+            x_cursor++;
             changes = 1;
 
         }
 
-        getxy(&x_cursor, &y_cursor);
+
         draw_editor(scroll_offset);
     }
 

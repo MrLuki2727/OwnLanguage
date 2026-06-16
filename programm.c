@@ -31,6 +31,8 @@ void programm_laden(char *dateiname)
 
 void programm_speichern(char* dateiname)
 {
+    dateiname_speichern();
+
     FILE* fp = fopen(dateiname, "w");
     if (fp == NULL) return;
 
@@ -133,4 +135,26 @@ void init_Programm()
     {
         Programm[i].text[0] = '\0';
     }
+}
+void dateiname_laden()
+{
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL) return;
+
+    fgets(FILENAME, 128, fp);
+
+
+    FILENAME[strcspn(FILENAME, "\n")] = '\0';
+
+    fclose(fp);
+}
+
+void dateiname_speichern()
+{
+    FILE *fp = fopen("config.txt", "w");
+    if (fp == NULL) return;
+
+    fprintf(fp, "%s", FILENAME); // %s verwenden, nicht direkt FILENAME
+
+    fclose(fp);
 }
