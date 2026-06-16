@@ -75,7 +75,7 @@ int main(void)
         }
         else if (sondertaste && taste == 72) // Pfeil hoch
         {
-            if (scroll_offset > 0 && y_cursor == 2)
+            if (scroll_offset > 0 && y_cursor ==     2)
             {
                 scroll_offset--;
                 changes = 4;

@@ -14,11 +14,11 @@ Built from scratch — custom lexer, interpreter, and editor. No libraries, no f
 
 ## Platform Support
 
-| Platform | Supported | Notes |
-|----------|-----------|-------|
-| Windows 10/11 | ✅ | Fully supported |
-| macOS | ❌ | Not supported |
-| Linux | ❌ | Not supported |
+| Platform      | Supported  | Notes           |
+|---------------|------------|-----------------|
+| Windows 10/11 | ✅          | Fully supported |
+| macOS         | ❌          | Not supported   |
+| Linux         | ❌          | Not supported   |
 
 OwnLanguage uses the Windows Console API (`windows.h`) directly for cursor control, color output and raw keyboard input. There is no platform abstraction layer — it is Windows only by design. macOS and Linux builds will not compile.
 
@@ -68,14 +68,14 @@ The editor opens `Code.lu` in the current directory on startup. If the file does
 
 The editor opens directly in the terminal. Line numbers are shown automatically on the left — you don't type them.
 
-| Key | Action |
-|-----|--------|
-| Arrow keys | Move cursor |
-| Any character | Insert at cursor position |
-| Backspace | Delete character left of cursor |
-| Delete | Delete character right of cursor |
-| Tab | Run the program |
-| ESC | Open menu |
+| Key           | Action                           |
+|---------------|----------------------------------|
+| Arrow keys    | Move cursor                      |
+| Any character | Insert at cursor position        |
+| Backspace     | Delete character left of cursor  |
+| Delete        | Delete character right of cursor |
+| Tab           | Run the program                  |
+| ESC           | Open menu                        |
 
 The editor only redraws the line that actually changed — not the entire screen. Syntax highlighting is built in.
 
@@ -141,9 +141,9 @@ END
 
 ### Operators
 
-| Type | Symbols |
-|------|---------|
-| Arithmetic | `+` `-` `*` `/` |
+| Type       | Symbols                     |
+|------------|-----------------------------|
+| Arithmetic | `+` `-` `*` `/`             |
 | Comparison | `==` `!=` `<` `>` `<=` `>=` |
 
 ### Example Program
