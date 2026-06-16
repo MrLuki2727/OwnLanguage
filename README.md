@@ -6,6 +6,64 @@ Built from scratch — custom lexer, interpreter, and editor. No libraries, no f
 
 ---
 
+## Screenshot
+
+![OwnLanguage Editor](screenshot.png)
+
+---
+
+## Platform Support
+
+| Platform | Supported | Notes |
+|----------|-----------|-------|
+| Windows 10/11 | ✅ | Fully supported |
+| macOS | ❌ | Not supported |
+| Linux | ❌ | Not supported |
+
+OwnLanguage uses the Windows Console API (`windows.h`) directly for cursor control, color output and raw keyboard input. There is no platform abstraction layer — it is Windows only by design. macOS and Linux builds will not compile.
+
+---
+
+## Installation & Building
+
+### Requirements
+
+- Windows 10 or 11
+- [CLion](https://www.jetbrains.com/clion/) (or any IDE that supports CMake)
+- MinGW-w64 (bundled with CLion, or install separately via [winlibs.com](https://winlibs.com))
+- CMake 3.20+
+
+### Steps
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/yourusername/OwnLanguage.git
+cd OwnLanguage
+```
+
+**2. Open in CLion**
+
+File → Open → select the `OwnLanguage` folder. CLion will detect the `CMakeLists.txt` automatically.
+
+**3. Build**
+
+Hit the green build button, or run:
+```bash
+cmake -B cmake-build-debug -G "Ninja"
+cmake --build cmake-build-debug --target OwnLanguage
+```
+
+**4. Run**
+```bash
+./cmake-build-debug/OwnLanguage.exe
+```
+
+The editor opens `Code.lu` in the current directory on startup. If the file doesn't exist, it starts empty.
+
+> **Note for macOS users:** This project will not build on macOS. It depends on `windows.h`, `SetConsoleOutputCP`, `GetConsoleScreenBufferInfo` and other Windows-only APIs. There is no workaround.
+
+---
+
 ## Editor
 
 The editor opens directly in the terminal. Line numbers are shown automatically on the left — you don't type them.
@@ -19,7 +77,7 @@ The editor opens directly in the terminal. Line numbers are shown automatically 
 | Tab | Run the program |
 | ESC | Open menu |
 
-The editor only redraws the line that was changed — not the entire screen. Syntax highlighting is built in.
+The editor only redraws the line that actually changed — not the entire screen. Syntax highlighting is built in.
 
 ---
 
@@ -104,23 +162,9 @@ Output: `1 2 3 4 5 6 7 8 9 10 99`
 
 ---
 
-## Building
-
-Requires CLion with MinGW. Windows only (`windows.h` for console control).
-
-```bash
-cmake --build cmake-build-debug --target OwnLanguage
-```
-
-Or just hit the build button in CLion.
-
-The program opens `Code.lu` on startup. If it doesn't exist, it starts with an empty file.
-
----
-
 ## File Format
 
-Programs are saved as `.lu` files. Plain text, one command per line, no line numbers in the file (those are handled by the editor).
+Programs are saved as `.lu` files. Plain text, one command per line, no line numbers in the file (the editor handles those).
 
 ---
 
@@ -148,3 +192,5 @@ console.c/.h    — low-level console functions (gotoxy, getxy, colors)
 ```
 
 ---
+
+Built for the [Hack Club Stardance Challenge](https://stardance.hackclub.com).
