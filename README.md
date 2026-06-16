@@ -8,7 +8,7 @@ Built from scratch — custom lexer, interpreter, and editor. No libraries, no f
 
 ## Screenshot
 
-![OwnLanguage Editor](screenshot.png)
+![OwnLanguage Editor](Screenshot.png)
 
 ---
 
