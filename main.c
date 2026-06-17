@@ -5,6 +5,30 @@
 #include "run.h"
 #include <stdio.h>
 
+int x_cursor = 7;
+int y_cursor = 2;
+
+void cursor_bewegen(int neue_zeile, int neue_spalte)
+{
+    int index = neue_zeile - 2 + scroll_offset;
+
+    if (index < 0 || index >= 999) return;
+
+    int laenge = strlen(Programm[index].text);
+
+    int max_x = 7 + laenge;
+
+    if (neue_spalte > max_x) {
+        neue_spalte = max_x;
+    }
+    if (neue_spalte < 7) {
+        neue_spalte = 7;
+    }
+
+    x_cursor = neue_spalte;
+    y_cursor = neue_zeile;
+}
+
 
 
 int main(void)
@@ -22,8 +46,7 @@ int main(void)
     draw_editor(scroll_offset);
 
 
-    int x_cursor = 7;
-    int y_cursor = 2;
+
     while (1)
     {
         gotoxy(x_cursor, y_cursor);
@@ -74,31 +97,69 @@ int main(void)
 
             }
         }
-        else if (sondertaste && taste == 72) // Pfeil hoch
+
+        else if (sondertaste && taste == 72) // hoch
         {
-            if (scroll_offset > 0 && y_cursor ==     2)
+
+            if (y_cursor == 2)
             {
-                scroll_offset--;
-                changes = 4;
+                if (scroll_offset > 0)
+                {
+                    scroll_offset--;
+                    changes = 4; // Redraw triggern
+
+                    cursor_bewegen(y_cursor, x_cursor);
+                }
             }
-            else if (y_cursor > 2) y_cursor --;
-        }
-        else if (sondertaste && taste == 80) // Pfeil runter
-        {
-            if (y_cursor < 24) y_cursor++;
-            else if (y_cursor == 24)
+            else if (y_cursor > 2)
             {
-                scroll_offset++;
-                changes = 4;
+                // Normales Bewegen nach oben, solange wir nicht am Rand sind
+                cursor_bewegen(y_cursor - 1, x_cursor);
             }
         }
-        else if (sondertaste && taste == 75) // Pfeil links
+
+
+        else if (sondertaste && taste == 80)// RUNTER
         {
-            if (x_cursor > 7) x_cursor--;
+
+            if (y_cursor == 24)
+            {
+                int naechster_index = 22 + scroll_offset;
+
+                if (naechster_index < 999)
+                {
+                    scroll_offset++;
+                    changes = 4;
+
+                    cursor_bewegen(y_cursor, x_cursor);
+                }
+            }
+            else if (y_cursor < 24)
+            {
+                cursor_bewegen(y_cursor + 1, x_cursor);
+            }
         }
-        else if (sondertaste && taste == 77) // Pfeil rechts
+        else if (sondertaste && taste == 75) // links
         {
-            x_cursor++;
+            if (x_cursor > 7)
+            {
+             x_cursor --;
+            }
+
+        }
+        else if (sondertaste && taste == 77) // rechts
+        {
+            int index = y_cursor - 2 + scroll_offset;
+
+            if (index < 0 || index >= 999) break;
+
+            int max_x = 7 + strlen(Programm[index].text);
+
+            if (x_cursor < max_x)
+            {
+                x_cursor++;
+
+            }
         }
         else if (taste == 9) // Tab -> ausführen
         {

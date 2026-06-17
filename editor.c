@@ -91,7 +91,7 @@ void draw_editor_code(int offset)
         gotoxy(0, y_cursor);
         int nummer = y_cursor - 2 + 1 + offset;
         draw_code_with_synax(nummer);
-        gotoxy(x_cursor, y_cursor); // Cursor zurück auf ursprüngliche Position
+        gotoxy(x_cursor, y_cursor);
         clearall = 0;
     }
     else if (changes == 2 || changes == 3)

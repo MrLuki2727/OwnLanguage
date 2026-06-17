@@ -38,8 +38,6 @@ void programm_speichern(char* dateiname)
 
     for (int i = 0; i < 1000; i++)
     {
-        if (Programm[i].text[0] == '\0') break;
-
         fprintf(fp, "%s\n", Programm[i].text);
     }
 

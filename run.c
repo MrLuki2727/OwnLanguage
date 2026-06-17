@@ -201,12 +201,16 @@ int debug_programm_ausfuehren(void)
         int output = zeile_ausfuehren(Programm[current_line].text);
 
         int variablen_printed = 0;
-        textcolor(MAGENTA);
         gotoxy(58,lastpos-scroll_offset);
-        printf(" ");
-        textbackground(YELLOW);
+        textbackground(BLACK);
+        changes = 1;
+        clearall = 0;
+        draw_editor(scroll_offset);
         gotoxy(58,current_line+2 - scroll_offset);
-        printf ("<");
+        textbackground(WHITE);
+        changes = 1;
+        clearall = 0;
+        draw_editor(scroll_offset);
         textbackground(BLACK);
         textcolor(WHITE);
         lastpos = current_line+2-scroll_offset;

@@ -27,4 +27,6 @@ void dateiname_laden();
 
 void dateiname_speichern();
 
+
+
 #endif //OWNLANGUAGE_PROGRAMM_H
