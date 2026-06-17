@@ -1,16 +1,18 @@
 #include "variablen.h"
 
 
-double num_variable[26];
+int num_variable[26];
+int num_variable_gesetzt[26];
 
-void num_variable_setzen(char var, double value)
+void num_variable_setzen(char var, int value)
 {
     if (var < 'A' || var > 'Z') return;
 
     num_variable[var - 'A'] = value;
+    num_variable_gesetzt[var - 'A'] = 1;
 }
 
-double num_variable_lesen(char var)
+int num_variable_lesen(char var)
 {
     if (var < 'A' || var > 'Z') return -1;
 

@@ -9,6 +9,9 @@
 
 int main(void)
 {
+
+
+
     dateiname_laden();
     initConsole();
     setCursorType(C_SMALL);
@@ -17,8 +20,6 @@ int main(void)
     init_Programm();
     programm_laden(FILENAME);
     draw_editor(scroll_offset);
-
-
 
 
     int x_cursor = 7;
@@ -105,6 +106,15 @@ int main(void)
             programm_ausfuehren();
             getch();
             changes = 4;
+        }
+        else if (sondertaste && taste == 59)
+        {
+            debug_programm_ausfuehren();
+            gotoxy(x_cursor, y_cursor);
+            debugmode = 0;
+            changes = 4;
+            clearall = 1;
+            draw_editor(scroll_offset);
         }
         else if (!sondertaste)
         {

@@ -15,6 +15,7 @@ int scroll_offset = 0;
 int running_printed_lines = 0;
 int previous_scroll_offset = 0;
 int exit_code = 1;
+int clearall = 0;
 
 
 static void leerzeichen_ueberspringen(char **s)
@@ -32,8 +33,9 @@ void draw_editor(int offset) // 0 = keine changes 1 = Neues Zeichen 2 = Neue Zei
     setCursorType(C_INVISABLE);
     if (changes == 4)
     {
-        draw_editor_ambient(offset);
         draw_editor_code(offset);
+        draw_editor_ambient(offset);
+
     }
     else
     {
@@ -77,17 +79,20 @@ void draw_editor_code(int offset)
         {
             gotoxy(0, i + 2);
             draw_code_with_synax(i + 1 + offset);
-        }
 
+        }
+    clearall = 0;
     }
     else if (changes == 1)
     {
-       int y_cursor;
+        int y_cursor;
         int x_cursor;
         getxy(&x_cursor, &y_cursor);
         gotoxy(0, y_cursor);
         int nummer = y_cursor - 2 + 1 + offset;
         draw_code_with_synax(nummer);
+        gotoxy(x_cursor, y_cursor); // Cursor zurück auf ursprüngliche Position
+        clearall = 0;
     }
     else if (changes == 2 || changes == 3)
     {
@@ -101,6 +106,8 @@ void draw_editor_code(int offset)
             int nummer = i - 2 + 1 + offset;
             draw_code_with_synax(nummer);
         }
+        gotoxy(x_cursor, y_cursor); // Cursor zurück
+        clearall = 0;
     }
     changes = 0;
 }
@@ -144,7 +151,7 @@ void draw_code_with_synax(int number)
         }
         else if (isalpha((unsigned char) *s))
         {
-            const char *keywords[] = {"LET", "PRINT", "GOTO", "IF", "ELSE", "WHILE", "ENDWHILE", "INPUT", "END", NULL};
+            const char *keywords[] = {"LET", "PRINT", "GOTO", "IF", "ELSE", "WHILE", "ENDWHILE", "INPUT", "END","REM", NULL};
             int gefunden = 0;
 
             for (int i = 0; keywords[i] != NULL; i++)
@@ -188,7 +195,17 @@ void draw_code_with_synax(int number)
 
     // Rest der Zeile mit Leerzeichen auffüllen (damit alte Zeichen überschrieben werden)
     textcolor(FARBE_RESET);
-    printf("%-*s", 110 - (int)(s - Programm[number-1].text), "");
+    if (clearall == 1)
+    {
+        printf("%-*s", 120 - (int)(s - Programm[number-1].text), "");
+
+    }
+    else
+    {
+        int restbreite = 30 - (int)(s - Programm[number-1].text);
+        if (restbreite > 0) printf("%-*s", restbreite, " ");
+    }
+
 }
 
 
@@ -288,6 +305,7 @@ void draw_editor_menu()
         else if (taste == 27)
         {
             changes = 4;
+            clearall = 1;
             return;
         }
         else if (taste == 13)
@@ -400,6 +418,7 @@ void draw_editor_menu()
                         {
                             draw_editor_menu();
                             changes = 4;
+                            clearall = 1;
                             return;
                         }
                 }

@@ -7,6 +7,7 @@ extern int scroll_offset;
 extern int running_printed_lines;
 extern int previouse_scroll_offset;
 extern int exit_code;
+extern int clearall;
 
 void draw_editor(int offset);
 
