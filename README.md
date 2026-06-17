@@ -6,7 +6,7 @@ Built from scratch — custom lexer, interpreter, and editor. No libraries, no f
 
 ---
 
-## Screenshot
+## IN PROGRAMM SCREENSHOT
 
 ![OwnLanguage Editor](Screenshot.png)
 
@@ -16,7 +16,7 @@ Built from scratch — custom lexer, interpreter, and editor. No libraries, no f
 
 | Platform      | Supported | Notes           |
 |---------------|-----------|-----------------|
-| Windows 10/11 | ✅        | Fully supported |
+| Windows 11    | ✅        | Fully supported |
 | macOS         | ❌        | Not supported   |
 | Linux         | ❌        | Not supported   |
 
@@ -63,7 +63,7 @@ Press any key to return to the editor after the program finishes or hits an erro
 
 ## Language Reference
 
-Variables are single uppercase letters `A` to `Z`. There are no types — everything is a number (`double`).
+Variables are single uppercase letters `A` to `Z`. There are no types — everything is a number (`int`).
 
 ### Commands
 
@@ -159,7 +159,7 @@ On startup, OwnLanguage reads `config.txt` (auto-generated) to find the last ope
 
 ### Requirements
 
-- Windows 10 or 11
+- Windows 11
 - [CLion](https://www.jetbrains.com/clion/) (or any IDE that supports CMake)
 - MinGW-w64 (bundled with CLion, or install separately via [winlibs.com](https://winlibs.com))
 - CMake 3.20+
@@ -211,4 +211,3 @@ console.c/.h    — low-level console functions (gotoxy, getxy, colors)
 
 ---
 
-Built for the [Hack Club Stardance Challenge](https://stardance.hackclub.com).
