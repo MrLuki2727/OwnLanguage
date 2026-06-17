@@ -14,53 +14,19 @@ Built from scratch — custom lexer, interpreter, and editor. No libraries, no f
 
 ## Platform Support
 
-| Platform      | Supported  | Notes           |
-|---------------|------------|-----------------|
-| Windows 10/11 | ✅          | Fully supported |
-| macOS         | ❌          | Not supported   |
-| Linux         | ❌          | Not supported   |
+| Platform      | Supported | Notes           |
+|---------------|-----------|-----------------|
+| Windows 10/11 | ✅        | Fully supported |
+| macOS         | ❌        | Not supported   |
+| Linux         | ❌        | Not supported   |
 
 OwnLanguage uses the Windows Console API (`windows.h`) directly for cursor control, color output and raw keyboard input. There is no platform abstraction layer — it is Windows only by design. macOS and Linux builds will not compile.
 
 ---
 
-## Installation & Building
+## Releases
 
-### Requirements
-
-- Windows 10 or 11
-- [CLion](https://www.jetbrains.com/clion/) (or any IDE that supports CMake)
-- MinGW-w64 (bundled with CLion, or install separately via [winlibs.com](https://winlibs.com))
-- CMake 3.20+
-
-### Steps
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/yourusername/OwnLanguage.git
-cd OwnLanguage
-```
-
-**2. Open in CLion**
-
-File → Open → select the `OwnLanguage` folder. CLion will detect the `CMakeLists.txt` automatically.
-
-**3. Build**
-
-Hit the green build button, or run:
-```bash
-cmake -B cmake-build-debug -G "Ninja"
-cmake --build cmake-build-debug --target OwnLanguage
-```
-
-**4. Run**
-```bash
-./cmake-build-debug/OwnLanguage.exe
-```
-
-The editor opens `Code.lu` in the current directory on startup. If the file doesn't exist, it starts empty.
-
-> **Note for macOS users:** This project will not build on macOS. It depends on `windows.h`, `SetConsoleOutputCP`, `GetConsoleScreenBufferInfo` and other Windows-only APIs. There is no workaround.
+Grab the latest release at [github.com/MrLuki2727/OwnLanguage/releases](https://github.com/MrLuki2727/OwnLanguage/releases). Download, run `OwnLanguage.exe`, done.
 
 ---
 
@@ -75,9 +41,23 @@ The editor opens directly in the terminal. Line numbers are shown automatically 
 | Backspace     | Delete character left of cursor  |
 | Delete        | Delete character right of cursor |
 | Tab           | Run the program                  |
+| F1            | Enter debug mode                 |
 | ESC           | Open menu                        |
 
 The editor only redraws the line that actually changed — not the entire screen. Syntax highlighting is built in.
+
+---
+
+## Debug Mode
+
+Press **F1** to enter debug mode. The interpreter steps through the program one line at a time — press any key to advance to the next line.
+
+While stepping, all variables that have been assigned a value are shown on the right side of the screen with their current values. The currently executing line is highlighted with a `<` marker.
+
+- Lines that cause an error are highlighted in **red**
+- The final `END` line is highlighted in **green**
+
+Press any key to return to the editor after the program finishes or hits an error.
 
 ---
 
@@ -134,6 +114,11 @@ Supports nesting.
 GOTO 3
 ```
 
+**REM** — comment, line is ignored by the interpreter
+```
+REM this is a comment
+```
+
 **END** — stop execution
 ```
 END
@@ -141,9 +126,9 @@ END
 
 ### Operators
 
-| Type       | Symbols                     |
-|------------|-----------------------------|
-| Arithmetic | `+` `-` `*` `/`             |
+| Type       | Symbols                      |
+|------------|------------------------------|
+| Arithmetic | `+` `-` `*` `/`              |
 | Comparison | `==` `!=` `<` `>` `<=` `>=` |
 
 ### Example Program
@@ -165,6 +150,39 @@ Output: `1 2 3 4 5 6 7 8 9 10 99`
 ## File Format
 
 Programs are saved as `.lu` files. Plain text, one command per line, no line numbers in the file (the editor handles those).
+
+On startup, OwnLanguage reads `config.txt` (auto-generated) to find the last opened file and opens it automatically. If `config.txt` doesn't exist yet, it gets created on the first save.
+
+---
+
+## Building
+
+### Requirements
+
+- Windows 10 or 11
+- [CLion](https://www.jetbrains.com/clion/) (or any IDE that supports CMake)
+- MinGW-w64 (bundled with CLion, or install separately via [winlibs.com](https://winlibs.com))
+- CMake 3.20+
+
+### Steps
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/MrLuki2727/OwnLanguage.git
+cd OwnLanguage
+```
+
+**2. Open in CLion**
+
+File → Open → select the `OwnLanguage` folder. CLion will detect `CMakeLists.txt` automatically.
+
+**3. Build**
+```bash
+cmake -B cmake-build-debug -G "Ninja"
+cmake --build cmake-build-debug --target OwnLanguage
+```
+
+> **Note for macOS users:** This project will not build on macOS. It depends on `windows.h`, `SetConsoleOutputCP`, `GetConsoleScreenBufferInfo` and other Windows-only APIs. There is no workaround.
 
 ---
 
