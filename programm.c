@@ -36,7 +36,16 @@ void programm_speichern(char* dateiname)
     FILE* fp = fopen(dateiname, "w");
     if (fp == NULL) return;
 
+    int last_non_empty = -1;
     for (int i = 0; i < 1000; i++)
+    {
+        if (Programm[i].text[0] != '\0')
+        {
+            last_non_empty = i;
+        }
+    }
+
+    for (int i = 0; i <= last_non_empty; i++)
     {
         fprintf(fp, "%s\n", Programm[i].text);
     }
@@ -137,12 +146,18 @@ void init_Programm()
 void dateiname_laden()
 {
     FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL) return;
+    if (fp == NULL) {
+        strcpy(FILENAME, "Code.lu");
+        return;
+    }
 
-    fgets(FILENAME, 128, fp);
+    if (fgets(FILENAME, 128, fp) != NULL) {
+        FILENAME[strcspn(FILENAME, "\n")] = '\0';
+    }
 
-
-    FILENAME[strcspn(FILENAME, "\n")] = '\0';
+    if (FILENAME[0] == '\0') {
+        strcpy(FILENAME, "Code.lu");
+    }
 
     fclose(fp);
 }

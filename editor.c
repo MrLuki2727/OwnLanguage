@@ -468,7 +468,7 @@ void change_filename()
     char filename[100];
     scanf("%s", filename);
 
-    if (strstr(filename,".lu") == NULL) {change_filename();}
+    if (strstr(filename,".lu") == NULL) {change_filename(); return;}
     setCursorType(C_INVISABLE);
     strcpy(FILENAME, filename);
     gotoxy(50, 10);

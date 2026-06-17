@@ -161,6 +161,11 @@ int main(void)
 
             }
         }
+        else if (sondertaste && taste == 83) // Delete (Entf)
+        {
+            zeichen_loeschen();
+            changes = 1;
+        }
         else if (taste == 9) // Tab -> ausführen
         {
             clrscr();

@@ -84,7 +84,11 @@ int zeile_ausfuehren(char *text)
             char *else_s = Programm[current_line + 1].text + 4;
             leerzeichen_ueberspringen(&else_s);
             if (*else_s == '\0') return -3; // nichts nach ELSE
-            zeile_ausfuehren(else_s);
+            int else_ret = zeile_ausfuehren(else_s);
+            if (else_ret >= 0 || else_ret == -2 || else_ret == -3)
+            {
+                return else_ret;
+            }
             return current_line + 2;
         }
         return -1;
